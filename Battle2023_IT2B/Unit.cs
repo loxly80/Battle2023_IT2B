@@ -8,31 +8,26 @@ namespace Battle2023_IT2B
 {
   public class Unit
   {
-    private int hp;
-    public int HP
-    {
-      get => hp;
-      set => hp = Math.Max(Math.Min(value, 200), 50);
-    }
+    public int HP { get; private set; }
+    public int DMG { get; private set; }
 
-    private int dmg;
-    public int DMG
-    {
-      get
-      {
-        return dmg;
-      }
-      set
-      {
-        dmg = Math.Max(Math.Min(value, 20), 5);
-      }
-    }
-
+    public Action? Died;
+    
     public Unit(int hp, int dmg)
     {
-
+      HP = hp;
+      DMG = dmg;
     }
 
-   
+    public void GetHit(int dmg)
+    {
+      HP -= DMG;
+      if(HP <= 0)
+      {
+        HP = 0;
+        // generovaní události
+        Died?.Invoke();
+      }
+    }
   }
 }
